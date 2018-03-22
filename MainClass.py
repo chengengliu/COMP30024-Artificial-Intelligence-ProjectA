@@ -28,3 +28,4 @@ if(board[9] == 'Moves'):
 
 else:
     elimMove = MakeMoves()
+    fuck this shit, im out of fuking options
