@@ -11,12 +11,13 @@ while True:
         break
     board.append(line)
 print(board)
-
+#这里range应该是0 到7 
 if(board[8] == 'Moves'):
-    for i in range(0, 8):
-        for j in range(0, 8):
+    for i in range(0, 7):
+        for j in range(0, 7):
             validMove = ValidMove(i, j, board)
             if(board[i][j] == 'O'):
+                print ('I J ', i, j,"\n")
                 calWhiteMove = validMove.calMoves()
             elif(board[i][j] == '@'):   
                         
@@ -30,12 +31,12 @@ if(board[8] == 'Moves'):
 else:
     elimMove = MakeMoves()'''
 '''
-X------X 
--------- 
------O-- 
-----@O-- 
-------O- 
------O@- 
--------@ 
-X------X
-Moves'''
+    X------X 
+    -------- 
+    -----O-- 
+    ----@O-- 
+    ------O- 
+    -----O@- 
+    -------@ 
+    X------X
+    Moves'''

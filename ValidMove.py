@@ -10,8 +10,23 @@ class ValidMove:
         self.board = board
     '''   x 上下  y 左右'''
     def calMoves(self):
-        
+
         try: 
+
+
+
+            if(self.board[self.x-1][self.y] == '-') or (self.board[self.x +1][self.y] == '-'):
+                print ("Current x y position", self.x,self.y,"\n")
+                self.validMoves +=1
+
+            if(self.board[self.x-2][self.y] == '-') or (self.board[self.x+2][self.y] == '-'):
+                self.validMoves +=1
+
+            if(self.board[self.x][self.y+1] == '-') or (self.board[self.x][self.y-1] == '-'):
+                self.validMoves +=1
+            if(self.board[self.x][self.y+2] == '-') or (self.board[self.x][self.y-2] == '-'):
+                self.validMoves +=1
+            '''
             if(self.board[self.x-1][self.y] == '-'):
                 self.validMoves += 1
             elif(self.board[self.x-2][self.y] == '-') :
@@ -42,6 +57,7 @@ class ValidMove:
                 self.validMoves += 1
             elif(self.board[self.x][self.y+2] == '-') and self.y < 6:
                 self.validMoves += 1
+            '''
         except IndexError:
             print ("Out of bounds")
 
