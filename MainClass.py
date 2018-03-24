@@ -4,39 +4,54 @@ from ValidMove import ValidMove
 print("Enter the input, Ctrl+X to end:")
 board = []
 n = 0
+totalValidMoves = 0
+
 while True:
     try:
          line = input()
     except EOFError:
         break
     board.append(line)
+
+
+
 print(board)
-#这里range应该是0 到7 
+
 if(board[8] == 'Moves'):
-    for i in range(0, 7):
-        for j in range(0, 7):
+    for i in range(0, 8):
+        for j in range(0, 8):
+            #print (i)
+            #print (j)
             validMove = ValidMove(i, j, board)
+            #print (validMove)
             if(board[i][j] == 'O'):
-                print ('I J ', i, j,"\n")
+                print ('白棋坐标，I J ', i, j,"\n")
                 calWhiteMove = validMove.calMoves()
-            elif(board[i][j] == '@'):   
+                totalValidMoves += calWhiteMove
+            if(board[i][j] == '@'):   
+
+                print ('黑棋坐标 I J', i, j, "\n")
                         
                 calBlackMove = validMove.calMoves()
+                totalValidMoves+=calBlackMove
             else:
                 continue
 
-    #print(calWhiteMove)
-    #print(calBlackMove)
+print (totalValidMoves)
+
+#print(calWhiteMove)
+#print(calBlackMove)
 '''
 else:
     elimMove = MakeMoves()'''
+
 '''
-    X------X 
-    -------- 
-    -----O-- 
-    ----@O-- 
-    ------O- 
-    -----O@- 
-    -------@ 
-    X------X
-    Moves'''
+X------X 
+-------- 
+-----O-- 
+----@O-- 
+------O- 
+-----O@- 
+-------@ 
+X------X
+Moves'''
