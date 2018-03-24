@@ -13,17 +13,15 @@ class ValidMove:
 
         try: 
 
-
-
             if(self.board[self.x-1][self.y] == '-') or (self.board[self.x +1][self.y] == '-'):
-                print ("Current x y position", self.x,self.y,"\n")
+                #print ("Current x y position", self.x,self.y,"\n")
                 self.validMoves +=1
-
             if(self.board[self.x-2][self.y] == '-') or (self.board[self.x+2][self.y] == '-'):
                 self.validMoves +=1
 
             if(self.board[self.x][self.y+1] == '-') or (self.board[self.x][self.y-1] == '-'):
                 self.validMoves +=1
+
             if(self.board[self.x][self.y+2] == '-') or (self.board[self.x][self.y-2] == '-'):
                 self.validMoves +=1
             '''
@@ -59,6 +57,6 @@ class ValidMove:
                 self.validMoves += 1
             '''
         except IndexError:
-            print ("Out of bounds")
+            pass
 
         return self.validMoves
