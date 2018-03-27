@@ -15,4 +15,7 @@ You shouldn't have to go beyond a sensible implementation of an appropriate unin
 For now, probably just start by trying to get a program that solves the 'Massacre' example board within a few seconds.
 
 
-https://github.com/aimacode/aima-python
+https://github.com/aimacode/aima-python  Aima Module
+
+目前思路是将棋子列为一个class， MainClass 读入input时候建立这个棋子的obj。 
+input读入完成以后得到一个含有棋子的list。 传入这个list进屠杀class， 进行search。
