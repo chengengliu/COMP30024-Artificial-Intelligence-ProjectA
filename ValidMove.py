@@ -10,7 +10,7 @@ class ValidMove:
         self.board = board
     
     def calMoves(self):
-       try: 
+        try: 
             if(self.board[self.x-1][self.y] == '-'):
                 self.validMoves += 1
             elif(self.board[self.x-2][self.y] == '-'):
@@ -23,7 +23,7 @@ class ValidMove:
                 self.validMoves += 1
             elif(self.board[self.x+2][self.y] == '-'):
                 self.validMoves += 1
-        except: IndexError:
+        except IndexError:
             pass
 
         try:    

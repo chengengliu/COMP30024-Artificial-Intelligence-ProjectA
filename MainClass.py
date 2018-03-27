@@ -2,9 +2,12 @@
 from ValidMove import ValidMove
 from Graph import Graph
 from collections import defaultdict
+from MakeMoves import MakeMoves
+import aimapython.search
 
 print("Enter the input, Ctrl+X to end:")
 board = []
+pieceList = []
 n = 0
 dict = {}
 
@@ -39,7 +42,7 @@ if(board[8] == 'Moves'):
             validMove = ValidMove(i, j, board)
             #print (validMove)
             if(board[i][j] == 'O'):
-                print ('白棋坐标，I J ', i, j,"\n")
+                #print ('白棋坐标，I J ', i, j,"\n")
                 calWhiteMove += validMove.calMoves()
                 #totalValidMoves += calWhiteMove
             if(board[i][j] == '@'):   
@@ -56,8 +59,17 @@ if(board[8] == 'Moves'):
 print(calWhiteMove)
 print(calBlackMove)
 
-#moving pieves stage
-else:
+
+
+#moving pieces stage
+if(board[8] == 'Massacre'):
+    for i in range(0,8):
+        for j in range(0,8):
+            if(board[i][j] == 'O'):
+
+
+
+    '''
     for i in range(0, 8):
         for j in range(0, 8):
 
@@ -82,6 +94,10 @@ else:
                 #board, we also need the white piece position for moving stage
                 graph.BFS({(i,j):board[i][j]})
                 #makeMoves = MakeMoves(white piece postition)
+    ''' 
+
+
+
 '''
 X------X 
 -------- 
@@ -92,5 +108,7 @@ X------X
 -------@ 
 X------X
 Moves'''
+
+
 
 '''build a graph for bfs, not tested yet '''

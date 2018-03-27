@@ -17,5 +17,9 @@ For now, probably just start by trying to get a program that solves the 'Massacr
 
 https://github.com/aimacode/aima-python  Aima Module
 
-目前思路是将棋子列为一个class， MainClass 读入input时候建立这个棋子的obj。 
-input读入完成以后得到一个含有棋子的list。 传入这个list进屠杀class， 进行search。
+
+27/3 晚间update：
+个人思路： naively thinking，一般来说每一个棋子有至少四种走法。 随机选取一个白棋子，开始走。 白棋子保存一个与黑棋子之间的distance， 取一个最小的距离（三个黑棋子取
+最近的）（入Stack）搜索该白棋子的周围可走的地方，入Stack。走到不能再走时候，即完成。 可以加上对于此时与黑棋子的距离，dist。 每一步的dist
+应该都变小，如果不是，不走这一步。 
+对于黑棋子，如果已经被两个白棋子包围了，标记出来。下次traverse忽略掉。。

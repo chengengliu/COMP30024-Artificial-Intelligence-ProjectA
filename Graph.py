@@ -13,8 +13,8 @@ class Graph:
 
         while queue:
             s = queue.pop(0)
-            print s
+            print (s)
             for i in self.graph[s]:
-                if visited[i] = False:
+                if visited[i] == False:
                     queue.append(i)
                     visited[i] = True
