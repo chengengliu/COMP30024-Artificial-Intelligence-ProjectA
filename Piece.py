@@ -2,22 +2,33 @@
 from ValidMove import ValidMove
 from Stack import Stack
 import aimapython.search
+
 #from aimapython.search import search
 
 
 class GoalToSolve(aimapython.search.Problem):
-	def __init__(self, initialState, goal = None):
+	board = []
+
+	def __init__(self, initialState, goal = None, pieceList):
 		self.initialState = initialState
 		self.goal = goal
-	def actions(self, initialState):
-		
+		self.pieceList = pieceList
+	
+	###
+	#InitialState is the starting position of the current piece?
+	####
+	def actions(self, initialState, numberOfPieces):
+		column = initialState[0]
+		row = initialState[1]
+		checkSurrounding(numberOfPieces)
+
 		return 
 
+	def checkSurrounding(self):
+		for i in pieceList:
+			#Search for Black Piece and check the distance cost?
+			if(i.color = 0) and ()
 
-		checkSurrounding(7)
-
-	def checkSurrounding(self, numberOfPieces, ):
-		print ()
 
 
 	def pathCost(initialState, finalState, goalPosition):
@@ -34,6 +45,9 @@ class GoalToSolve(aimapython.search.Problem):
 	def calculateCost(point1, point2):
 		dist = (point2[0] - point1[0])^2 + (point2[1]- point1[1]) ^2
 		return dist
+
+	def dfsSearch(self, pieceList):
+
 
 class Piece(aimapython.search.Node):
 
