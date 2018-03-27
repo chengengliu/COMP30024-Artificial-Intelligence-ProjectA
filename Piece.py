@@ -10,16 +10,20 @@ class GoalToSolve(aimapython.search.Problem):
 		self.initialState = initialState
 		self.goal = goal
 	def actions(self, initialState):
+		
+		return 
+
 
 		checkSurrounding(7)
 
-	def checkSurrounding(self, numberOfPieces):
+	def checkSurrounding(self, numberOfPieces, ):
 		print ()
 
 
 	def pathCost(initialState, finalState, goalPosition):
 		firstCost = [i - j for i, j in zip(initialState, goalPosition)]
 		secondCost =[i - j for i, j in zip(finalState, goalPosition)]
+
 		#The first movement is still better 
 		if(calculateCost(firstCost[0], firstCost[1])> 
 			calculateCost(secondCost[0], secondCost[0])):
