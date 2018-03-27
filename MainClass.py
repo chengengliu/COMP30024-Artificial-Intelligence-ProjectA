@@ -16,7 +16,12 @@ while True:
 
 
 
-#print(board)
+print(board)
+
+#
+#  ####记住 一点， board坐标是反着的。 如果以下面ij 为例子， 坐标应该是（j，i)。 
+#
+
 
 if(board[8] == 'Moves'):
     for i in range(0, 8):
@@ -26,7 +31,7 @@ if(board[8] == 'Moves'):
             validMove = ValidMove(i, j, board)
             #print (validMove)
             if(board[i][j] == 'O'):
-                #print ('白棋坐标，I J ', i, j,"\n")
+                print ('白棋坐标，I J ', i, j,"\n")
                 calWhiteMove += validMove.calMoves()
                 #totalValidMoves += calWhiteMove
             if(board[i][j] == '@'):   
