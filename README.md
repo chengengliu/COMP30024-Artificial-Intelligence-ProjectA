@@ -30,3 +30,5 @@ https://github.com/aimacode/aima-python  Aima Module
 建立priority queue。
 目前已经明白了如何建立child 。。找到了感觉。 
 上传的code都会经过compile
+新加的NewPiece.py单独列出来，包括了部分create child的function。
+目前仍在写create child。 
