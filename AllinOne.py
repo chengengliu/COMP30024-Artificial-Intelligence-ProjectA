@@ -98,7 +98,7 @@ class MakeMove:
     #white piece near the black piece already, so the function can make a terminating move
     def makeMove(self):
         while (abs(self.whiteX - self.blackX) != 1) or (abs(self.whiteY - self.blackY) != 1):
-
+            print ()
 
 
 
@@ -115,7 +115,7 @@ while True:
     board.append(line)
 print(board)
 
-if(board[9] == 'Moves'):
+if(board[8] == 'Moves'):
     for i in range(0, 8):
         for j in range(0, 8):
             validMove = ValidMove(i, j, board)
@@ -146,7 +146,7 @@ else:
     #now start the loop to calculate the distance
     for wPiece in whitePieces:
         for bPiece in blackPieces:
-            if(wPiece.get_dist < wPiece.calDist(bPiece.x, bPiece.y)):
+            if(wPiece.get_dist() < wPiece.calDist(bPiece.x, bPiece.y)):
                 wPiece.set_dist(wPiece.calDist(bPiece.x, bPiece.y))
                 wPiece.set_blackx = bPiece.x
                 wPiece.set_blacky = bPiece.y
