@@ -31,6 +31,7 @@ class ConcretePiece(Piece):
 		#下上右左
 		direction = [(0,1), (0,-1), (1,0), (-1,0)]
 
+		#If current piece is not child
 		if not self.children:
 			for i in range(0,4):
 				# First case, when there is no surrounding pieces around
@@ -56,7 +57,7 @@ class ConcretePiece(Piece):
 					#Make the child node
 					#Add it to child list
 					child = ConcretePiece(position, self, newSurrounding)
-					self.child.append(child)
+					self.children.append(child)
 					continue
 				#Reinitialise the position movement 
 				# Now considering jumping 
@@ -73,7 +74,7 @@ class ConcretePiece(Piece):
 					newSurrounding[self.position[0]][self.position[1]] = '-'
 					newSurroundingp[newNewPosition[0]][newNewPosition[1]] = 'O'
 					child = ConcretePiece(position, self, newSurrounding)
-					self.child.append(child)
+					self.children.append(child)
 				#If the next position is out of bounds or hit a conner
 				#Skip move
 				if((self.surrounding[newRow][newColumn] == 'O' or '@' or'X') and 
@@ -83,6 +84,15 @@ class ConcretePiece(Piece):
 					(self.surrounding[newNewRow][newNewColumn] == 'O' or '@')):
 					continue
 
+class GreedyBestSearch:
+	def __init__(self, goalPosition, startPosition, surrounding):
+		#
+		#Might need to record the path ? Not Sure here 
+		#
+		self.goalPosition = goalPosition
+		self.surrounding = surrounding
+		self.path = []
+		self.startPosition = startPosition
 
 
 
