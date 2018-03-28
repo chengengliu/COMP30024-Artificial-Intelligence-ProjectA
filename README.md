@@ -23,3 +23,10 @@ https://github.com/aimacode/aima-python  Aima Module
 最近的）（入Stack）搜索该白棋子的周围可走的地方，入Stack。走到不能再走时候，即完成。 可以加上对于此时与黑棋子的距离，dist。 每一步的dist
 应该都变小，如果不是，不走这一步。 
 对于黑棋子，如果已经被两个白棋子包围了，标记出来。下次traverse忽略掉。。
+
+
+28/3 晚间update：
+考虑使用greedy 贪婪最佳优先搜索
+建立priority queue。
+目前已经明白了如何建立child 。。找到了感觉。 
+上传的code都会经过compile
