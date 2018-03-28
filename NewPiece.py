@@ -63,7 +63,27 @@ class ConcretePiece(Piece):
 				newNewColumn = self.position[0] + direction[i][0]
 				newNewRow = self.position[1] + direction[i][1]	
 				newNewPosition = (newNewColumn,newNewRow)
-				if(self.surrounding[newNewRow][newNewColumn] == '-') and 
+				# If the next of the next move is free and the next move is 
+				# possessed by other pieces(no matter what color is )
+				if((self.surrounding[newNewRow][newNewColumn] == '-') and 
+					(surrounding[newRow][newColumn] == 'O' or '@')):
+					#Similarly as above, change the original position to '- free'
+					# Change the next new postion to 'O 'possessed
+					newSurrounding = deepcopy(self.surrounding)
+					newSurrounding[self.position[0]][self.position[1]] = '-'
+					newSurroundingp[newNewPosition[0]][newNewPosition[1]] = 'O'
+					child = ConcretePiece(position, self, newSurrounding)
+					self.child.append(child)
+				#If the next position is out of bounds or hit a conner
+				#Skip move
+				if((self.surrounding[newRow][newColumn] == 'O' or '@' or'X') and 
+					(newNewRow> 7 or newNewRow < 0 or newNewColumn > 7 or newNewColumn < 0)):
+					continue
+				if((self.surrounding[newRow][newColumn] == 'O' or '@' or 'X') and
+					(self.surrounding[newNewRow][newNewColumn] == 'O' or '@')):
+					continue
+
+
 
 
 
