@@ -32,3 +32,6 @@ https://github.com/aimacode/aima-python  Aima Module
 上传的code都会经过compile
 新加的NewPiece.py单独列出来，包括了部分create child的function。
 目前仍在写create child。 
+
+Queue python source code:
+https://github.com/python/cpython/blob/3.6/Lib/queue.py
