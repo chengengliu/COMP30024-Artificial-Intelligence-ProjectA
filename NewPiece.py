@@ -16,6 +16,22 @@ class Board():
 			return ''
 		piece = self.board[position[0],position[1]]
 		return piece
+	# calculate sum of distance between each blakc piece and white piece
+	# this sum of distance is the priority. 
+	def sumOfDistance(self, blackList, whiteList):
+		pQueue = PriorityQueue()
+
+		for blakcPiece in blackList:
+			sumOfDistance  = 0
+			if(len(whiteList) == 0):
+				sumOfDistance = -1
+			for whitePiece in whiteList:
+				sumOfDistance+=abs(whitePiece[0] - blakcPiece[0])+abs(whitePiece[1]-blakcPiece[1])
+				pQueue.put(sumOfDistance, blackList)
+		return pQueue
+
+
+
 
 
 class Piece ():
@@ -125,7 +141,7 @@ class GreedyBestSearch:
 		self.path = []
 		self.startPosition = startPosition
 		self.pQueue  = Q()
-		
+
 	def search(self):
 		startingPiece = ConcretePiece(self.startPosition,0,self.surrounding)
 		#how to add the queue ?????
@@ -155,7 +171,7 @@ class GreedyBestSearch:
 					print ("Hello")
 					break
 				self.pQueue.put(c.position, i)
-
+		
 		return self.path
 
 				
