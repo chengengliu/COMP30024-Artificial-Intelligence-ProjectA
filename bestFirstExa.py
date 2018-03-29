@@ -19,6 +19,83 @@ VISITED_COL = "x"
 OBSTACLE_COL = ["@", "O", "X"]
 PATH_COL = "P"
 
+
+class BoardAnalyser():
+    def __init__(self, board, whiteMoves, blakcMoves):
+        self.board = board
+        self.whiteMoves = whiteMoves
+        self.blakcMoves = blakcMoves
+    def analyseMoves(self):
+        if board[8] == 'Moves':
+            print (board)
+            for i in range(0,8):
+                for j in range(0,8):
+                    #dict[(i,j)] = board[i][j]
+                    validMove = ValidMove(i, j, board)
+                    #print (validMove)
+                    if(board[i][j] == 'O'):
+                    #print ('白棋坐标，I J ', i, j,"\n")
+                        self.whiteMoves += validMove.calMoves()
+                    #totalValidMoves += calWhiteMove
+                    if(board[i][j] == '@'):   
+
+                    #print ('黑棋坐标 I J', i, j, "\n")
+                        
+                        self.blakcMoves += validMove.calMoves()
+                        #print ("HEllo")
+                        #print (blakcMoves)
+                    #totalValidMoves+=calBlackMove
+                    else:
+                        continue
+            return (self.whiteMoves,self.blakcMoves)
+
+class ValidMove:
+    'used to justify the available move for one chess piece'
+    x = 0
+    y = 0
+    board = []
+    validMoves = 0
+    def __init__(self, x, y, board):
+        self.x = x
+        self.y = y
+        self.board = board
+        #print (board)
+    
+    def calMoves(self):
+        try: 
+            if(self.board[self.x-1][self.y] == '-'):
+                self.validMoves += 1
+            elif(self.board[self.x-2][self.y] == '-'):
+                self.validMoves += 1
+        except IndexError:
+            pass
+
+        try:    
+            if(self.board[self.x+1][self.y] == '-'):
+                self.validMoves += 1
+            elif(self.board[self.x+2][self.y] == '-'):
+                self.validMoves += 1
+        except IndexError:
+            pass
+
+        try:    
+            if(self.board[self.x][self.y-1] == '-'):
+                self.validMoves += 1
+            elif(self.board[self.x][self.y-2] == '-'):
+                self.validMoves += 1        
+        except IndexError:
+            pass
+
+        try:    
+            if(self.board[self.x][self.y+1] == '-'):
+                self.validMoves += 1
+            elif(self.board[self.x][self.y+2] == '-'):
+                self.validMoves += 1
+        except IndexError:
+            pass
+            
+        return self.validMoves
+
 def generate_grid_mulPiece():
     return [list("X------X"), 
             list("--------"), 
@@ -67,6 +144,8 @@ def get_cost(grid, pos):
     col_val = grid[pos[0]][pos[1]]
     return int(col_val) if col_val.isdigit() else 1
 '''
+
+
 
 def get_neighbors(grid, row, col):
     height = len(grid)
@@ -191,6 +270,8 @@ if __name__ == "__main__":
     print("Enter the input, Ctrl+X to end:")
     board = []
     chessBoard = []
+    whiteMoves= 0
+    blakcMoves= 0
     n = 0
     while True:
         try:
@@ -198,10 +279,18 @@ if __name__ == "__main__":
         except EOFError:
             break
         board.append(line)
+    if(board[8] == 'Moves'):
+        boardAnalyser = BoardAnalyser(board, whiteMoves, blakcMoves)
+        (whiteMoves,blakcMoves) = boardAnalyser.analyseMoves()
+        print (whiteMoves)
+        print (blakcMoves)
+
+
     n = 0
     for line in board:
         if line != "Move" and line != "Massacre":
             #print(line)
             chessBoard.append(line.split(' '))
             n+=1
-    init(chessBoard)
+    if(board[8] == 'Massacre'):
+        init(chessBoard)
