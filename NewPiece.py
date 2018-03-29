@@ -19,9 +19,8 @@ class Board():
 			return ''
 		piece = self.board[position[0],position[1]]
 		return piece
-	# calculate sum of distance between each blakc piece and white piece
-	# this sum of distance is the priority. 
-	def sumOfDistance(self, blackList, whiteList):
+	# sort the black List based on the sum of distance 
+	def sortPieceList(self, blackList, whiteList):
 		pQueue = PriorityQueue()
 		for blakcPiece in blackList:
 			sumOfDistance  = 0
@@ -29,7 +28,7 @@ class Board():
 				sumOfDistance = -1
 			for whitePiece in whiteList:
 				sumOfDistance+=abs(whitePiece[0] - blakcPiece[0])+abs(whitePiece[1]-blakcPiece[1])
-				pQueue.put(sumOfDistance, blackList)
+				pQueue.put([sumOfDistance, blackList])
 		return pQueue
 
 
@@ -183,7 +182,10 @@ class Eliminate():
 		self.pieceList = pieceList
 
 
-	def EliminatePair(self):
+	def EliminatePairFirst(self):
+		# pairList will restore the (priority, [dest position], [block piece position ])
+		# i.e 2 means second priority to check()
+		# i means the blakc piece should be checked first
 		pair = []
 		for piece in self.blackList:
 			column = piece.position[0]
@@ -213,6 +215,19 @@ class Eliminate():
 				pair.append(pairList)
 
 		return pair
+
+	def solveForWhitePieces(self):
+		piecePairList = self.EliminatePairFirst()
+		for piecePair in piecePairList:
+
+			for piece in piecePair:
+
+				weight = 0;
+				#Most priority need to eliminate first 
+				if(piece[0] == 1):
+					position = piece[1][0]
+					possessedPiece = pair[1][1]
+
 
 
 
