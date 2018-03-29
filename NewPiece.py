@@ -20,7 +20,6 @@ class Board():
 	# this sum of distance is the priority. 
 	def sumOfDistance(self, blackList, whiteList):
 		pQueue = PriorityQueue()
-
 		for blakcPiece in blackList:
 			sumOfDistance  = 0
 			if(len(whiteList) == 0):
@@ -171,11 +170,12 @@ class GreedyBestSearch:
 					print ("Hello")
 					break
 				self.pQueue.put(c.position, i)
-		
+
 		return self.path
 
-				
+class KillingMachine():
 
+	def __init__(self,board)
 
 
 			
