@@ -1,3 +1,4 @@
+
 from pprint import pprint
 from collections import deque
 import copy
@@ -15,8 +16,8 @@ import math
 START_COL = "S"
 END_COL = "E"
 VISITED_COL = "x"
-OBSTACLE_COL = "@"
-PATH_COL = "O"
+OBSTACLE_COL = ["@", "O", "X"]
+PATH_COL = "P"
 
 def generate_grid_mulPiece():
     return [list("X------X"), 
@@ -28,60 +29,6 @@ def generate_grid_mulPiece():
             list("-------@"),
             list("X------X")]
 
-def generate_grid_empty():
-    return [[".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."]]
-
-
-def generate_grid_obstacle():
-    return [[".", ".", "#", ".", ".", ".", ".", ".", "."],
-            [".", ".", "#", ".", "#", ".", ".", ".", "."],
-            [".", ".", ".", ".", "#", ".", ".", ".", "."],
-            [".", ".", "#", ".", "#", ".", ".", ".", "."],
-            [".", ".", "#", ".", ".", ".", ".", ".", "."],
-            [".", ".", "#", ".", "#", ".", ".", ".", "."],
-            [".", ".", "#", "#", "#", ".", ".", ".", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."]]
-
-
-def generate_grid_obstacle_for_b_star():
-    """
-    worst obstacle for B*
-    """
-
-    return [[".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", "#", "#", "#", "#", "#", "#", "#", "."],
-            [".", ".", ".", ".", ".", ".", ".", "#", "."],
-            [".", ".", ".", ".", ".", ".", ".", "#", "."],
-            [".", ".", ".", ".", ".", ".", ".", "#", "."],
-            [".", ".", ".", ".", ".", ".", ".", "#", "."],
-            [".", ".", ".", ".", ".", ".", ".", "#", "."],
-            [".", "#", "#", "#", "#", "#", "#", "#", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."]]
-
-
-def generate_grid_weighted():
-    """
-    weighted grid
-    """
-
-    return [[".", ".", ".", ".", ".", ".", ".", ".", "."],
-            [".", "#", "#", "#", "#", ".", "#", "#", "."],
-            [".", ".", "2", "1", "9", ".", ".", "#", "."],
-            [".", ".", "9", "2", "2", ".", ".", "#", "."],
-            [".", ".", "9", "2", "2", ".", ".", "#", "."],
-            [".", ".", "2", "9", "9", ".", ".", "#", "."],
-            [".", ".", "9", "9", "9", ".", ".", "#", "."],
-            [".", "#", "#", "#", "#", "#", "#", "#", "."],
-            [".", ".", ".", ".", ".", ".", ".", ".", "."]]
 
 
 def heuristic_distance(pos, end_pos, type="e"):
@@ -134,7 +81,7 @@ def get_neighbors(grid, row, col):
     # check borders
     neighbors = filter(lambda t: (0 <= t[0] < height and 0 <= t[1] < width), neighbors)
     # check obstacles
-    neighbors = filter(lambda t: (grid[t[0]][t[1]] != OBSTACLE_COL), neighbors)
+    neighbors = filter(lambda t: (grid[t[0]][t[1]] not in OBSTACLE_COL), neighbors)
 
     return neighbors
 
@@ -168,24 +115,92 @@ def scan_grid(grid, start=(0, 0)):
     return came_from
 
 
-def init():
-    initial_grid = generate_grid_mulPiece()
-    start_pos = (6, 4)
-    directions = scan_grid(initial_grid, start_pos)
+def init(board):
+    whitePieces = []
+    blackPieces = []
+    initial_grid = board
+    for i in range(8):
+        for j in range(8):
+            if board[i][j] == 'O':
+                whitePieces.append((i, j))
+            if board[i][j] == '@':
+                blackPieces.append((i, j))
+    
+    #to generate path, found out the surrouding enviroment, is it next to a corner or next to a white piece already,
+    #or is the piece already at the edge
+    for wPiece in whitePieces:
+        start_pos = wPiece
+        directions = scan_grid(initial_grid, start_pos)
+        for bPiece in blackPieces:
+            if bPiece[1] == 7 or board[bPiece[0]][bPiece[1]+1] == 'O' or board[bPiece[0]][bPiece[1]+1] == 'X' :
+                path = find_path(start_pos, (bPiece[0], bPiece[1]-1), directions)
+                grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
+                pprint(grid_with_path)
+                print(f"steps: {len(path)}")
+                print(path)
 
-    path1 = find_path(start_pos, (7, 5), directions)
+            elif bPiece[1] == 0 or board[bPiece[0]][bPiece[1]-1] == 'O' or board[bPiece[0]][bPiece[1]-1] == 'X' :
+                path = find_path(start_pos, (bPiece[0], bPiece[1]+1), directions)
+                grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
+                pprint(grid_with_path)
+                print(f"steps: {len(path)}")
+                print(path)
+                
+            elif bPiece[0] == 7 or board[bPiece[0]+1][bPiece[1]] == 'O' or board[bPiece[0]+1][bPiece[1]] == 'X' :
+                path = find_path(start_pos, (bPiece[0]-1, bPiece[1]), directions)
+                grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
+                pprint(grid_with_path)
+                print(f"steps: {len(path)}")
+                print(path)                
+                
+            elif bPiece[0] == 0 or board[bPiece[0]-1][bPiece[1]] == 'O' or board[bPiece[0]-1][bPiece[1]] == 'X' :
+                path = find_path(start_pos, (bPiece[0]+1, bPiece[1]), directions)
+                grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
+                pprint(grid_with_path)
+                print(f"steps: {len(path)}")
+                print(path)                
+                
+            else:
+                path = find_path(start_pos, (bPiece[0]+1, bPiece[1]), directions)
+                grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
+                pprint(grid_with_path)
+                print(f"steps: {len(path)}")
+                print(path)
+
+
+    #start_pos = (4, 6)
+    #directions = scan_grid(initial_grid, start_pos)
+
+    #path1 = find_path(start_pos, (5, 7), directions)
     # need copy as we modify the grid
-    grid_with_path1 = draw_path(path1, copy.deepcopy(initial_grid))
-    pprint(grid_with_path1)
-    print(f"steps: {len(path1)}")
-    print(path1)
+    #grid_with_path1 = draw_path(path1, copy.deepcopy(initial_grid))
+    #pprint(grid_with_path1)
+    #print(f"steps: {len(path1)}")
+    #print(path1)
 
+    '''
     path2 = find_path(start_pos, (4, 7), directions)
     grid_with_path2 = draw_path(path2, copy.deepcopy(initial_grid))
     pprint(grid_with_path2)
     print(f"steps: {len(path2)}")
-    print(path2)
+    print(path2)'''
 
 
 if __name__ == "__main__":
-    init()
+    print("Enter the input, Ctrl+X to end:")
+    board = []
+    chessBoard = []
+    n = 0
+    while True:
+        try:
+             line = input()
+        except EOFError:
+            break
+        board.append(line)
+    n = 0
+    for line in board:
+        if line != "Move" and line != "Massacre":
+            #print(line)
+            chessBoard.append(line.split(' '))
+            n+=1
+    init(chessBoard)

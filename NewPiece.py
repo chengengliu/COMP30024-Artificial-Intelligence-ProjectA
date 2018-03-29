@@ -176,6 +176,7 @@ class GreedyBestSearch:
 class KillingMachine():
 
 	def __init__(self,board)
+	
 
 
 			
