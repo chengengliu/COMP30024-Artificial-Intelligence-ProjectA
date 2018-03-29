@@ -184,20 +184,33 @@ class Eliminate():
 
 
 	def EliminatePair(self):
-		pariList = []
+		pair = []
 		for piece in self.blackList:
 			column = piece.position[0]
 			row = piece.position[1]
 
-			pair = []
+			pairList = []
 			#Check up and down 
 			if(self.board.getPiece(column, row+1) == '-' and self.board.getPiece(column, row-1) == '-'):
-				pariList.append(2, [(column,row+1), (column,row-1)],piece)
+				pairList.append(2, [(column,row+1), (column,row-1)],piece)
 			#Check if the postion has been possessed by a white/black/corner
 			if((self.board.getPiece(colum,row+1) == 'X' or '@ ' or 'O') and self.board.getPiece(column,row-1)=='-'):
-				pariList.append(1,[(column,row-1), (column, row+1)], piece)
+				pairList.append(1,[(column,row-1), (column, row+1)], piece)
 			if((self.board.getPiece(colum,row-1) == 'X' or '@ ' or 'O') and self.board.getPiece(column,row+1)=='-'):
-				pariList.append(1,[(column,row+1), (column, row-1)], piece)
+				pairList.append(1,[(column,row+1), (column, row-1)], piece)
+
+			if(self.board.getPiece(column-1, row) == '-' and self.board.getPiece(column+1, row) == '-'):
+				pairList.append(2, [(column-1,row), (column+1,row)],piece)
+			
+			if((self.board.getPiece(colum-1,row) == 'X' or '@ ' or 'O') and self.board.getPiece(column+1,row)=='-'):
+				pairList.append(1,[(column+1,row), (column-1, row+1)], piece)
+			if((self.board.getPiece(colum+1,row) == 'X' or '@ ' or 'O') and self.board.getPiece(column-1,row)=='-'):
+				pairList.append(1,[(column-1,row), (column+1, row)], piece)
+
+			if(len(pairList)>0):
+				pair.append(pairList)
+
+		return pair
 
 
 			
