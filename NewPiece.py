@@ -95,6 +95,7 @@ class ConcretePiece(Piece):
 	#This should be the priority rule(or should we call it the heuristic function ? LOL )
 	def calculateDistance(self):
 		distance = abs(self.position[0] - self.goalPosition[0]) + abs(self.postion[1]-self.goalPosition[1])
+		#Reach the goalPosition 
 		if(self.position[0] == self.goalPosition[0] and self.position[1] == self.goalPosition[1]):
 			return 0
 		return distance
@@ -114,20 +115,23 @@ class GreedyBestSearch:
 		startingPiece = ConcretePiece(self.startPosition,0,self.surrounding)
 		#how to add the queue ?????
 		# this is the question
-		#Set a counter to count the move 
+		#Set a counter to count the move order 
 		i = 0 
 		#Put in the queue 
-		self.pQueue.put(i,startingPiece)
+		self.pQueue.put(startPosition, i, 0 )
 
 		# When the queue is not empty and it is not added to path yet
 		while(not self.PriorityQueue.empty() and not self.path):
 			#Look for the best (nearest ) child 
 			#Based on its distance p
-			child = pQueue.get()
+			child = pQueue.get()[0]
 			child.children()
 			self.visited.append(child.position)
 			for c in child.children:
-				print ()
+				if(c.position not in self.visited):
+					#count +=1
+				
+
 
 
 			
