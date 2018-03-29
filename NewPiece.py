@@ -1,6 +1,6 @@
 from copy import copy 
 try:
-	import PriorityQueue as Q
+	from queue import PriorityQueue as Q
 except ImportError:
 	import queue as Q
 
@@ -12,15 +12,15 @@ class Piece ():
 		self.parent = parent
 		self.position = position
 		self.cost = 0
-		if not parent:
-			self.path = [value]
-			self.start = start
-			self.goal = goal 
+		if parent:
+			self.path = [position]
+			self.startPoint = startPoint
+			self.goalPosition = goalPosition
 		else:
 			self.path = parent.path[:]
-			self.start = parent.start
-			self.goal = parent.goal
-			self.path.append(value)
+			self.startPoint = parent.startPoint
+			self.goalPosition = parent.goalPosition
+			self.path.append(self.position)
 
 class ConcretePiece(Piece):
 
@@ -121,7 +121,7 @@ class GreedyBestSearch:
 
 		##### Not quite sure what should be put in the queue
 		##### position must be there. Hwo about the order?
-		self.pQueue.put(startPosition, i)
+		self.pQueue.put(startingPiece, i)
 
 		# When the queue is not empty and it is not added to path yet
 		while(not self.PriorityQueue.empty() and not self.path):
@@ -137,8 +137,11 @@ class GreedyBestSearch:
 				# If reach the goal postiion ie. distance is 0 
 				if(c.distance == 0 ):
 					self.path = c.path
+					print ("Hello")
 					break
 				self.pQueue.put(c.position, i)
+
+		return self.path
 
 				
 
