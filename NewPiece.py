@@ -118,7 +118,10 @@ class GreedyBestSearch:
 		#Set a counter to count the move order 
 		i = 0 
 		#Put in the queue 
-		self.pQueue.put(startPosition, i, 0 )
+
+		##### Not quite sure what should be put in the queue
+		##### position must be there. Hwo about the order?
+		self.pQueue.put(startPosition, i)
 
 		# When the queue is not empty and it is not added to path yet
 		while(not self.PriorityQueue.empty() and not self.path):
@@ -130,9 +133,12 @@ class GreedyBestSearch:
 			for c in child.children:
 				if(c.position not in self.visited):
 					#count +=1
+					pass
+				# If reach the goal postiion ie. distance is 0 
 				if(c.distance == 0 ):
 					self.path = c.path
 					break
+				self.pQueue.put(c.position, i)
 
 				
 
