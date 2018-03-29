@@ -4,6 +4,20 @@ try:
 except ImportError:
 	import queue as Q
 
+
+
+
+class Board():
+	def __init__(self):
+		self.board = None
+		self.pieces = ['O', '@', 'X', '-']
+	def getPiece(self, postion):
+		if(position[0] > 7 or position[0] < 0 or position[1] >7 or position[1] < 0):
+			return ''
+		piece = self.board[position[0],position[1]]
+		return piece
+
+
 class Piece ():
 	#position contains the coordinates of the piece. (as a list)
 
@@ -111,6 +125,7 @@ class GreedyBestSearch:
 		self.path = []
 		self.startPosition = startPosition
 		self.pQueue  = Q()
+		
 	def search(self):
 		startingPiece = ConcretePiece(self.startPosition,0,self.surrounding)
 		#how to add the queue ?????
@@ -132,7 +147,7 @@ class GreedyBestSearch:
 			self.visited.append(child.position)
 			for c in child.children:
 				if(c.position not in self.visited):
-					#count +=1
+					count +=1
 					pass
 				# If reach the goal postiion ie. distance is 0 
 				if(c.distance == 0 ):
