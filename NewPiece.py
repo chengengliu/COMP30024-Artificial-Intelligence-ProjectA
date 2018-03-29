@@ -8,9 +8,12 @@ except ImportError:
 
 
 class Board():
-	def __init__(self):
+	def __init__(self, blackList, whiteList):
 		self.board = None
 		self.pieces = ['O', '@', 'X', '-']
+		self.blackList = blackList
+		self.whiteList = whiteList
+
 	def getPiece(self, postion):
 		if(position[0] > 7 or position[0] < 0 or position[1] >7 or position[1] < 0):
 			return ''
@@ -173,10 +176,16 @@ class GreedyBestSearch:
 
 		return self.path
 
-class KillingMachine():
+class Eliminate():
 
-	def __init__(self,board)
-	
+	def __init__(self,board,pieceList):
+		self.board = board
+		self.pieceList = pieceList
+
+
+	def EliminatePair(self):
+		pariList = []
+		for piece in self.board.blackList
 
 
 			
