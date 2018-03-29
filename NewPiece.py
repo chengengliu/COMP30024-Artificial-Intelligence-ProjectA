@@ -1,10 +1,13 @@
 from copy import copy 
-from queue import PriorityQueue
+try:
+	import PriorityQueue as Q
+except ImportError:
+	import queue as Q
 
 class Piece ():
 	#position contains the coordinates of the piece. (as a list)
 
-	def __init__(self, position, parent, startPoint=0, goalPoi = 0):
+	def __init__(self, position, parent, startPoint=0, goalPosition = 0):
 		self.children = []
 		self.parent = parent
 		self.position = position
@@ -21,10 +24,11 @@ class Piece ():
 
 class ConcretePiece(Piece):
 
-	def __int__(self,position, parent,surrounding, startPoint = 0, goalPoi = 0):
+	def __int__(self,position, parent,surrounding, startPoint = 0, goalPosition = 0):
 		#invoke a super constructor
-		super(ConcretePiece,self).__int__(position,parent,startPoint,goalPoi)
+		super(ConcretePiece,self).__int__(position,parent,startPoint,goalPosition)
 		self.surrounding = deepcopy(surrounding)
+		self.distance = self.calculateDistance()
 
 	
 	def children(self):
@@ -83,9 +87,13 @@ class ConcretePiece(Piece):
 				if((self.surrounding[newRow][newColumn] == 'O' or '@' or 'X') and
 					(self.surrounding[newNewRow][newNewColumn] == 'O' or '@')):
 					continue
+	#This should be the priority rule(or should we call it the heuristic function ? LOL )
+	def calculateDistance(self):
+		distance = abs(self.position[0] - self.goalPosition[0]) + abs(self.postion[1]-self.goalPosition[1])
+		return distance
 
 class GreedyBestSearch:
-	def __init__(self, goalPosition, startPosition, surrounding):
+	def __init__(self, startPosition,goalPosition, surrounding):
 		#
 		#Might need to record the path ? Not Sure here 
 		#
@@ -93,7 +101,16 @@ class GreedyBestSearch:
 		self.surrounding = surrounding
 		self.path = []
 		self.startPosition = startPosition
-
+		self.pQueue  = Q()
+	def search(self):
+		startingPiece = ConcretePiece(self.startPosition,0,self.surrounding)
+		#how to add the queue ?????
+		# this is the question 
+		self.pQueue.put(startingPiece)
+		while(not self.PriorityQueue.empty() and not self.path):
+			#Look for the best (nearest ) child 
+			#Based on its distance p
+			print()
 
 
 
