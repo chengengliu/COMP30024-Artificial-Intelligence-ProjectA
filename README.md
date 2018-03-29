@@ -38,3 +38,12 @@ https://github.com/python/cpython/blob/3.6/Lib/queue.py
 New updates in bestFirstExa file, current goal is to get the path done, this can be done by using the given method,
 although what kind of method still need to be studied, fuking desperate...., the algorithm is best first search. 
 white piece can't jump during the path finding stage, it need to be settled or better be settled.
+
+Update :
+1 找到所有可以被消灭的黑棋子
+2 根据priority sort black piece list。
+3 正在写（
+		如果黑棋子旁边有白棋子/黑棋子/Corner，优先考虑， weight设定为1
+		按距离来算，附近最近的白棋子的距离最短者，先干
+）
+4 干完以后需要update board做好标记，并且update pqueue
