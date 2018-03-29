@@ -122,9 +122,9 @@ def init(board):
     for i in range(8):
         for j in range(8):
             if board[i][j] == 'O':
-                whitePieces.append([i, j])
+                whitePieces.append((i, j))
             if board[i][j] == '@':
-                blackPieces.append([i, j])
+                blackPieces.append((i, j))
     
     #to generate path, found out the surrouding enviroment, is it next to a corner or next to a white piece already,
     #or is the piece already at the edge
@@ -200,6 +200,7 @@ if __name__ == "__main__":
     n = 0
     for line in board:
         if line != "Move" and line != "Massacre":
-            chessBoard[n] = line.split(' ')
+            #print(line)
+            chessBoard.append(line.split(' '))
             n+=1
     init(chessBoard)
