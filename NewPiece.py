@@ -193,17 +193,19 @@ class Eliminate():
 			#Check up and down 
 			if(self.board.getPiece(column, row+1) == '-' and self.board.getPiece(column, row-1) == '-'):
 				pairList.append(2, [(column,row+1), (column,row-1)],piece)
-			#Check if the postion has been possessed by a white/black/corner
+			#Check if the up side has been possessed by a white/black/corner
 			if((self.board.getPiece(colum,row+1) == 'X' or '@ ' or 'O') and self.board.getPiece(column,row-1)=='-'):
 				pairList.append(1,[(column,row-1), (column, row+1)], piece)
+			#Check if the down side has been possessed by a white/blakc/corner
 			if((self.board.getPiece(colum,row-1) == 'X' or '@ ' or 'O') and self.board.getPiece(column,row+1)=='-'):
 				pairList.append(1,[(column,row+1), (column, row-1)], piece)
-
+			#Similarly check left and right 
 			if(self.board.getPiece(column-1, row) == '-' and self.board.getPiece(column+1, row) == '-'):
 				pairList.append(2, [(column-1,row), (column+1,row)],piece)
-			
+			#Check if the left side has been possessed by a white/black/corner
 			if((self.board.getPiece(colum-1,row) == 'X' or '@ ' or 'O') and self.board.getPiece(column+1,row)=='-'):
 				pairList.append(1,[(column+1,row), (column-1, row+1)], piece)
+			#Check if the right side has been possessed by a white/blakc/corner
 			if((self.board.getPiece(colum+1,row) == 'X' or '@ ' or 'O') and self.board.getPiece(column-1,row)=='-'):
 				pairList.append(1,[(column-1,row), (column+1, row)], piece)
 
@@ -211,6 +213,8 @@ class Eliminate():
 				pair.append(pairList)
 
 		return pair
+
+
 
 
 			
