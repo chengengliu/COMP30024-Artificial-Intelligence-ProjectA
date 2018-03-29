@@ -1,4 +1,3 @@
-
 For part A, assume all Black pieces will be killable.
 
 
@@ -35,3 +34,7 @@ https://github.com/aimacode/aima-python  Aima Module
 
 Queue python source code:
 https://github.com/python/cpython/blob/3.6/Lib/queue.py
+
+New updates in bestFirstExa file, current goal is to get the path done, this can be done by using the given method,
+although what kind of method still need to be studied, fuking desperate...., the algorithm is best first search. 
+white piece can't jump during the path finding stage, it need to be settled or better be settled.
