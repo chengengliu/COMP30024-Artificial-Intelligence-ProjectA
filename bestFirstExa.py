@@ -29,7 +29,7 @@ def generate_grid_mulPiece():
             list("-------@"),
             list("X------X")]
 
-
+''' ##### No use this part
 
 def heuristic_distance(pos, end_pos, type="e"):
     """
@@ -44,7 +44,7 @@ def heuristic_distance(pos, end_pos, type="e"):
         return dx + dy
 
     return math.sqrt(dx * dx + dy * dy)
-
+'''
 
 def find_path(start, end, came_from):
     """Find the shortest path from start to end point"""
@@ -62,11 +62,11 @@ def find_path(start, end, came_from):
 
     return path
 
-
+'''  ### #### No use this part
 def get_cost(grid, pos):
     col_val = grid[pos[0]][pos[1]]
     return int(col_val) if col_val.isdigit() else 1
-
+'''
 
 def get_neighbors(grid, row, col):
     height = len(grid)
@@ -132,6 +132,7 @@ def init(board):
         start_pos = wPiece
         directions = scan_grid(initial_grid, start_pos)
         for bPiece in blackPieces:
+
             if bPiece[1] == 7 or board[bPiece[0]][bPiece[1]+1] == 'O' or board[bPiece[0]][bPiece[1]+1] == 'X' :
                 path = find_path(start_pos, (bPiece[0], bPiece[1]-1), directions)
                 grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
