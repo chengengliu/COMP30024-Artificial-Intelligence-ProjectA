@@ -43,9 +43,13 @@ class ConcretePiece(Piece):
 				#上下左右 都要看
 				newColumn = self.position[0] + direction[i][0]
 				newRow = self.position[1] + direction[i][1]
+				#If out of bounds, skip the move 
 				if(newColumn > 7 or newColumn < 0 
 					or newRow > 7 or newRow < 0):
 					continue
+				if(self.surrounding[newRow][newColumn] == 'X'):
+					continue
+
 				#New position
 				newPosition = (newColumn, newRow)
 
@@ -122,7 +126,9 @@ class GreedyBestSearch:
 			child = pQueue.get()
 			child.children()
 			self.visited.append(child.position)
-			
+			for c in child.children:
+				print ()
+
 
 			
 
