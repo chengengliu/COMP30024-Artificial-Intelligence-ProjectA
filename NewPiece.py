@@ -130,6 +130,10 @@ class GreedyBestSearch:
 			for c in child.children:
 				if(c.position not in self.visited):
 					#count +=1
+				if(c.distance == 0 ):
+					self.path = c.path
+					break
+
 				
 
 
