@@ -63,8 +63,22 @@ class BoardAnalyser():
             for i in range(0,4):
                 if(self.getPiece(directions[i])=='-'):
                     totalValidMoves+=1
-                if(self.getPiece())
+                if(self.getPiece(directions[i])=='O' or '@'):
+                    newColumn = directions[i][1]
+                    newRow = directions[i][0]
 
+                    if(i == 0 and self.getPiece(newRow, column+1)== '-'):
+                        totalValidMoves+=1
+                        continue
+                    if(i==1 and self.getPiece(newRow, column-1)=='-'):
+                        totalValidMoves+=1
+                        continue
+                    if(i==2 and self.getPiece(newRow+1, column)=='-'):
+                        totalValidMoves+=1
+                        continue
+                    if(i==3 and self.getPiece(newRow-1, column)== '-'):
+                        totalValidMoves+=1
+                        continue
 
 class ValidMove:
     'used to justify the available move for one chess piece'
