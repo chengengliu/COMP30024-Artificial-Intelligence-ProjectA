@@ -20,6 +20,8 @@ OBSTACLE_COL = ["@", "O", "X"]
 PATH_COL = "P"
 
 
+
+
 class BoardAnalyser():
     def __init__(self, board, whiteMoves, blakcMoves):
         self.board = board
@@ -27,27 +29,51 @@ class BoardAnalyser():
         self.blakcMoves = blakcMoves
     def analyseMoves(self):
         if board[8] == 'Moves':
-            print (board)
+            #print (board)
             for i in range(0,8):
                 for j in range(0,8):
                     #dict[(i,j)] = board[i][j]
                     validMove = ValidMove(i, j, board)
                     #print (validMove)
                     if(board[i][j] == 'O'):
-                    #print ('白棋坐标，I J ', i, j,"\n")
+                        #print ('白棋坐标，I J ', i, j,"\n")
                         self.whiteMoves += validMove.calMoves()
-                    #totalValidMoves += calWhiteMove
+                        print (self.whiteMoves)
+                        #totalValidMoves += calWhiteMove
                     if(board[i][j] == '@'):   
 
-                    #print ('黑棋坐标 I J', i, j, "\n")
+                        #print ('黑棋坐标 I J', i, j, "\n")
                         
                         self.blakcMoves += validMove.calMoves()
+                        print (self.blakcMoves)
                         #print ("HEllo")
                         #print (blakcMoves)
-                    #totalValidMoves+=calBlackMove
+                        #totalValidMoves+=calBlackMove
                     else:
                         continue
             return (self.whiteMoves,self.blakcMoves)
+
+    def getPiece(self, position):
+        if(position[0] > 7 or position[0] < 0 or position[1] >7 or position[1] < 0):
+            return ' '
+        #Default position[0] is i i.e row number and position[j] is j i.e column number
+        piece = self.board[position[0]][position[1]]
+        return piece
+
+    def countMoves(self):
+        totalValidMoves = 0
+        if(len(self.board)==0):
+            return 0
+        for piece in self.board:
+            column = piece[1]
+            row = piece[0]
+
+            directions = [(row,column+1), (row,column-1), (row+1,column),(row-1,column)]
+            for i in range(0,4):
+                if(self.getPiece(directions[i])=='-'):
+                    totalValidMoves+=1
+                if(self.getPiece())
+
 
 class ValidMove:
     'used to justify the available move for one chess piece'
