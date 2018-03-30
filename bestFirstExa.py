@@ -4,6 +4,146 @@ import math
 
 OBSTACLE_COL = ["@", "O", "X"]
 
+class BoardAnalyser():
+    def __init__(self, board):
+        self.board = board
+        self.whitePieces = []
+        self.blackPieces = []
+        self.whiteMoves = 0
+        self.blakcMoves = 0
+    def readBoard(self):
+        #print (self.board)
+        for i in range(0,8):
+            for j in range(0,8):
+                #print (len(board))
+                #print (board[i][j])
+                if(self.board[i][j] == 'O'):
+                    #print (self.board[i][j])
+                    self.whitePieces.append([i,j])
+                    #print (self.whitePieces)
+                if(self.board[i][j] == '@'):
+                    self.blackPieces.append([i,j])
+        #print (self.whitePieces)
+        return self.whitePieces, self.blackPieces
+
+    def analyseMoves(self):
+        if board[8] == 'Moves':
+            #print (board)
+            for i in range(0,8):
+                for j in range(0,8):
+                    #dict[(i,j)] = board[i][j]
+                    validMove = ValidMove(i, j, board)
+                    #print (validMove)
+                    if(board[i][j] == 'O'):
+                        print ("Hello")
+                        #print ('白棋坐标，I J ', i, j,"\n")
+                        self.whiteMoves += validMove.calMoves()
+                        #print (self.whiteMoves)
+                        #totalValidMoves += calWhiteMove
+                    if(board[i][j] == '@'):   
+
+                        #print ('黑棋坐标 I J', i, j, "\n")
+                        
+                        self.blakcMoves += validMove.calMoves()
+                        #print (self.blakcMoves)
+                        #print ("HEllo")
+                        #print (blakcMoves)
+                        #totalValidMoves+=calBlackMove
+                    else:
+                        continue
+            print (self.whiteMoves, self.blakcMoves)
+            return [self.whiteMoves,self.blakcMoves]
+
+    def getPiece(self, position):
+        if(position[0] > 7 or position[0] < 0 or position[1] >7 or position[1] < 0):
+            return ' '
+        #Default position[0] is i i.e row number and position[j] is j i.e column number
+        piece = self.board[position[0]][position[1]]
+        return piece
+
+    def countMoves(self,lists):
+        totalValidMoves = 0
+        #print ("Hello")
+        if(len(self.board)==0):
+            #print ("fuck")
+            return 0
+        for piece in lists:
+            #print ("Hello")
+            column = piece[1]
+            row = piece[0]
+
+            directions = [(row,column+1), (row,column-1), (row+1,column),(row-1,column)]
+            for i in range(0,4):
+                #print ("Hello")
+                if(self.getPiece(directions[i])=='-'):
+                    totalValidMoves+=1
+                    #print ("Hello")
+                if(self.getPiece(directions[i])=='O' or '@'):
+                    newColumn = directions[i][1]
+                    newRow = directions[i][0]
+
+                    if(i == 0 and self.getPiece((newRow, column+1))== '-'):
+                        totalValidMoves+=1
+                        continue
+                    if(i==1 and self.getPiece((newRow, column-1))=='-'):
+                        totalValidMoves+=1
+                        continue
+                    if(i==2 and self.getPiece((newRow+1, column))=='-'):
+                        totalValidMoves+=1
+                        continue
+                    if(i==3 and self.getPiece((newRow-1, column))== '-'):
+                        totalValidMoves+=1
+                        continue
+        #print (totalValidMoves)
+        return totalValidMoves
+
+class ValidMove:
+    'used to justify the available move for one chess piece'
+    x = 0
+    y = 0
+    board = []
+    validMoves = 0
+    def __init__(self, x, y, board):
+        self.x = x
+        self.y = y
+        self.board = board
+        #print (board)
+    
+    def calMoves(self):
+        try: 
+            if(self.board[self.x-1][self.y] == '-'):
+                self.validMoves += 1
+            elif(self.board[self.x-2][self.y] == '-'):
+                self.validMoves += 1
+        except IndexError:
+            pass
+
+        try:    
+            if(self.board[self.x+1][self.y] == '-'):
+                self.validMoves += 1
+            elif(self.board[self.x+2][self.y] == '-'):
+                self.validMoves += 1
+        except IndexError:
+            pass
+
+        try:    
+            if(self.board[self.x][self.y-1] == '-'):
+                self.validMoves += 1
+            elif(self.board[self.x][self.y-2] == '-'):
+                self.validMoves += 1        
+        except IndexError:
+            pass
+
+        try:    
+            if(self.board[self.x][self.y+1] == '-'):
+                self.validMoves += 1
+            elif(self.board[self.x][self.y+2] == '-'):
+                self.validMoves += 1
+        except IndexError:
+            pass
+            
+        return self.validMoves
+
 def find_path(start, end, came_from):
     #make the shortest path
     path = [end]
