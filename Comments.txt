@@ -1,0 +1,12 @@
+Moving stage:
+	loop through every chess piece on the board, check the surrounding enviroment.
+	nested loops give n^2 time and space complexity
+
+Massacre stage:
+	The basic idea of path finding algorithm is to use best first search to find shortest path
+	since the problem is move white piece to terminate black piece, we take the white piece as
+	the staring node of a searching tree, and the black piece on the board is the node that we 
+	need to find. For each white piece, we will always find the nearest black piece and find the
+	shortest path to it. Worst case would be O(n*log(n)) if two piece at the most distant place 
+	on board. By some conditions we also make sure that the same black piece would not be 
+	terminated twice 

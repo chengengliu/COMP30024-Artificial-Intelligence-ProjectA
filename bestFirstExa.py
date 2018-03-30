@@ -11,8 +11,7 @@ OBSTACLE_COL = ["@", "O", "X"]
 PATH_COL = "P"
 
 
-<<<<<<< HEAD
-=======
+
 
 
 class BoardAnalyser():
@@ -183,7 +182,6 @@ def heuristic_distance(pos, end_pos, type="e"):
 '''
 
 
->>>>>>>  Not fixed yet
 def find_path(start, end, came_from):
     #make the shortest path
     path = [end]
