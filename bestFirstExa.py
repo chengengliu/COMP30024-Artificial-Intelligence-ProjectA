@@ -2,15 +2,6 @@
 from pprint import pprint
 from collections import deque
 import copy
-"""
-S - start point
-E - end point
-x - visited
-@ - path
-# - obstacle
-1 - cost
-"""
-
 import math
 
 START_COL = "S"
@@ -149,6 +140,7 @@ def heuristic_distance(pos, end_pos, type="e"):
     return math.sqrt(dx * dx + dy * dy)
 '''
 
+
 def find_path(start, end, came_from):
     """Find the shortest path from start to end point"""
 
@@ -165,12 +157,10 @@ def find_path(start, end, came_from):
 
     return path
 
-'''  ### #### No use this part
+
 def get_cost(grid, pos):
     col_val = grid[pos[0]][pos[1]]
     return int(col_val) if col_val.isdigit() else 1
-'''
-
 
 
 def get_neighbors(grid, row, col):
@@ -185,7 +175,7 @@ def get_neighbors(grid, row, col):
 
     # check borders
     neighbors = filter(lambda t: (0 <= t[0] < height and 0 <= t[1] < width), neighbors)
-    # check obstacles
+    # check other pieces
     neighbors = filter(lambda t: (grid[t[0]][t[1]] not in OBSTACLE_COL), neighbors)
 
     return neighbors
@@ -224,6 +214,7 @@ def init(board):
     whitePieces = []
     blackPieces = []
     initial_grid = board
+    terminated = []
     for i in range(8):
         for j in range(8):
             if board[i][j] == 'O':
@@ -237,41 +228,45 @@ def init(board):
         start_pos = wPiece
         directions = scan_grid(initial_grid, start_pos)
         for bPiece in blackPieces:
+            if bPiece not in terminated:
+                if bPiece[1] == 7 or board[bPiece[0]][bPiece[1]+1] == 'O' or board[bPiece[0]][bPiece[1]+1] == 'X' :
+                    path = find_path(start_pos, (bPiece[0], bPiece[1]-1), directions)
+                    grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
+                    pprint(grid_with_path)
+                    terminated.append(bPiece)
+                    print(f"steps: {len(path)}")
+                    print(path)
 
-            if bPiece[1] == 7 or board[bPiece[0]][bPiece[1]+1] == 'O' or board[bPiece[0]][bPiece[1]+1] == 'X' :
-                path = find_path(start_pos, (bPiece[0], bPiece[1]-1), directions)
-                grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
-                pprint(grid_with_path)
-                print(f"steps: {len(path)}")
-                print(path)
-
-            elif bPiece[1] == 0 or board[bPiece[0]][bPiece[1]-1] == 'O' or board[bPiece[0]][bPiece[1]-1] == 'X' :
-                path = find_path(start_pos, (bPiece[0], bPiece[1]+1), directions)
-                grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
-                pprint(grid_with_path)
-                print(f"steps: {len(path)}")
-                print(path)
-                
-            elif bPiece[0] == 7 or board[bPiece[0]+1][bPiece[1]] == 'O' or board[bPiece[0]+1][bPiece[1]] == 'X' :
-                path = find_path(start_pos, (bPiece[0]-1, bPiece[1]), directions)
-                grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
-                pprint(grid_with_path)
-                print(f"steps: {len(path)}")
-                print(path)                
-                
-            elif bPiece[0] == 0 or board[bPiece[0]-1][bPiece[1]] == 'O' or board[bPiece[0]-1][bPiece[1]] == 'X' :
-                path = find_path(start_pos, (bPiece[0]+1, bPiece[1]), directions)
-                grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
-                pprint(grid_with_path)
-                print(f"steps: {len(path)}")
-                print(path)                
-                
-            else:
-                path = find_path(start_pos, (bPiece[0]+1, bPiece[1]), directions)
-                grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
-                pprint(grid_with_path)
-                print(f"steps: {len(path)}")
-                print(path)
+                elif bPiece[1] == 0 or board[bPiece[0]][bPiece[1]-1] == 'O' or board[bPiece[0]][bPiece[1]-1] == 'X' :
+                    path = find_path(start_pos, (bPiece[0], bPiece[1]+1), directions)
+                    grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
+                    pprint(grid_with_path)
+                    terminated.append(bPiece)
+                    print(f"steps: {len(path)}")
+                    print(path)
+                    
+                elif bPiece[0] == 7 or board[bPiece[0]+1][bPiece[1]] == 'O' or board[bPiece[0]+1][bPiece[1]] == 'X' :
+                    path = find_path(start_pos, (bPiece[0]-1, bPiece[1]), directions)
+                    grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
+                    pprint(grid_with_path)
+                    terminated.append(bPiece)
+                    print(f"steps: {len(path)}")
+                    print(path)                
+                    
+                elif bPiece[0] == 0 or board[bPiece[0]-1][bPiece[1]] == 'O' or board[bPiece[0]-1][bPiece[1]] == 'X' :
+                    path = find_path(start_pos, (bPiece[0]+1, bPiece[1]), directions)
+                    grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
+                    pprint(grid_with_path)
+                    terminated.append(bPiece)
+                    print(f"steps: {len(path)}")
+                    print(path)                
+                    
+                else:
+                    path = find_path(start_pos, (bPiece[0]+1, bPiece[1]), directions)
+                    grid_with_path = draw_path(path, copy.deepcopy(initial_grid))
+                    pprint(grid_with_path)
+                    print(f"steps: {len(path)}")
+                    print(path)
 
 
     #start_pos = (4, 6)
@@ -296,8 +291,6 @@ if __name__ == "__main__":
     print("Enter the input, Ctrl+X to end:")
     board = []
     chessBoard = []
-    whiteMoves= 0
-    blakcMoves= 0
     n = 0
     while True:
         try:
@@ -305,18 +298,10 @@ if __name__ == "__main__":
         except EOFError:
             break
         board.append(line)
-    if(board[8] == 'Moves'):
-        boardAnalyser = BoardAnalyser(board, whiteMoves, blakcMoves)
-        (whiteMoves,blakcMoves) = boardAnalyser.analyseMoves()
-        print (whiteMoves)
-        print (blakcMoves)
-
-
     n = 0
     for line in board:
         if line != "Move" and line != "Massacre":
             #print(line)
             chessBoard.append(line.split(' '))
             n+=1
-    if(board[8] == 'Massacre'):
-        init(chessBoard)
+    init(chessBoard)
