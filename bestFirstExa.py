@@ -228,6 +228,7 @@ def init(board):
                 terminated.append(bPiece)
             elif bPiece[1] != 0 and bPiece[1] != 7 and (board[bPiece[0]][bPiece[1]+1] == 'O' or board[bPiece[0]][bPiece[1]+1] == 'X') and (board[bPiece[0]][bPiece[1]-1] == 'O' or board[bPiece[0]][bPiece[1]-1] == 'X'):
                 terminated.append(bPiece)
+            
             if bPiece not in terminated:
                 if bPiece[1] == 7 or board[bPiece[0]][bPiece[1]+1] == 'O' or board[bPiece[0]][bPiece[1]+1] == 'X' :
                     path = find_path(start_pos, (bPiece[0], bPiece[1]-1), directions)
@@ -235,8 +236,8 @@ def init(board):
                     board[wPiece[0]][wPiece[1]] == '-'
                     wPiece = (bPiece[0], bPiece[1]-1)
                     board[wPiece[0]][wPiece[1]] == 'O'
-                    print(f"steps: {len(path)}")
-                    print(path)
+                    for pos in path:
+                        print(pos.reverse() + '->')
 
                 elif bPiece[1] == 0 or board[bPiece[0]][bPiece[1]-1] == 'O' or board[bPiece[0]][bPiece[1]-1] == 'X' :
                     path = find_path(start_pos, (bPiece[0], bPiece[1]+1), directions)
@@ -244,8 +245,8 @@ def init(board):
                     board[wPiece[0]][wPiece[1]] == '-'
                     wPiece = (bPiece[0], bPiece[1]-1)
                     board[wPiece[0]][wPiece[1]] == 'O'
-                    print(f"steps: {len(path)}")
-                    print(path)
+                    for pos in path:
+                        print(pos.reverse() + '->')
                         
                 elif bPiece[0] == 7 or board[bPiece[0]+1][bPiece[1]] == 'O' or board[bPiece[0]+1][bPiece[1]] == 'X' :
                     path = find_path(start_pos, (bPiece[0]-1, bPiece[1]), directions)
@@ -253,8 +254,8 @@ def init(board):
                     board[wPiece[0]][wPiece[1]] == '-'
                     wPiece = (bPiece[0], bPiece[1]-1)
                     board[wPiece[0]][wPiece[1]] == 'O'
-                    print(f"steps: {len(path)}")
-                    print(path)                
+                    for pos in path:
+                        print(pos.reverse() + '->')
                         
                 elif bPiece[0] == 0 or board[bPiece[0]-1][bPiece[1]] == 'O' or board[bPiece[0]-1][bPiece[1]] == 'X' :
                     path = find_path(start_pos, (bPiece[0]+1, bPiece[1]), directions)
@@ -262,17 +263,16 @@ def init(board):
                     board[wPiece[0]][wPiece[1]] == '-'
                     wPiece = (bPiece[0], bPiece[1]-1)
                     board[wPiece[0]][wPiece[1]] == 'O'
-                    print(f"steps: {len(path)}")
-                    print(path)                
+                    for pos in path:
+                        print(pos.reverse() + '->')
                         
                 else:
                     path = find_path(start_pos, (bPiece[0]+1, bPiece[1]), directions)
                     board[wPiece[0]][wPiece[1]] == '-'
                     wPiece = (bPiece[0], bPiece[1]-1)
                     board[wPiece[0]][wPiece[1]] == 'O'
-                    print(f"steps: {len(path)}")
-                    print(path)
-
+                    for pos in path:
+                        print(pos.reverse() + '->')
 
 if __name__ == "__main__":
     print("Enter the input, Ctrl+X to end:")
