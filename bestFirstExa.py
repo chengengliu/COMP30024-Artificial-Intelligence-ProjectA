@@ -69,8 +69,8 @@ class BoardAnalyser():
             return 0
         for piece in lists:
             #print ("Hello")
-            column = piece[1]
-            row = piece[0]
+            column = piece[0]
+            row = piece[1]
 
             directions = [(row,column+1), (row,column-1), (row+1,column),(row-1,column)]
             for i in range(0,4):
@@ -273,6 +273,8 @@ if __name__ == "__main__":
     print("Enter the input, Ctrl+X to end:")
     board = []
     chessBoard = []
+    whitePieces = []
+    blackPieces = []
     n = 0
     while True:
         try:
@@ -286,4 +288,12 @@ if __name__ == "__main__":
             #print(line)
             chessBoard.append(line.split(' '))
             n+=1
-    init(chessBoard)
+    if(board[8] == 'Massacre'):
+        init(chessBoard)
+    else:
+        boardAnalyser = BoardAnalyser()
+        whitePieces,blackPieces = boardAnalyser.readBoard()
+        print(boardAnalyser.countMoves(whitePieces))
+        print(boardAnalyser.countMoves(blackPieces))
+
+
