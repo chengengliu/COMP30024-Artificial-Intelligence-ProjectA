@@ -35,7 +35,7 @@ class BoardAnalyser():
                     validMove = ValidMove(i, j, board)
                     #print (validMove)
                     if(board[i][j] == 'O'):
-                        print ("Hello")
+                        #print ("Hello")
                         #print ('白棋坐标，I J ', i, j,"\n")
                         self.whiteMoves += validMove.calMoves()
                         #print (self.whiteMoves)
@@ -51,7 +51,7 @@ class BoardAnalyser():
                         #totalValidMoves+=calBlackMove
                     else:
                         continue
-            print (self.whiteMoves, self.blakcMoves)
+            #print (self.whiteMoves, self.blakcMoves)
             return [self.whiteMoves,self.blakcMoves]
 
     def getPiece(self, position):
@@ -67,12 +67,12 @@ class BoardAnalyser():
         if(len(self.board)==0):
             #print ("fuck")
             return 0
-        print (self.board)
+        ##print (self.board)
         for piece in lists:
             #print ("Hello")
             column = piece[1]
             row = piece[0]
-            print(piece)
+            #print(piece)
             directions = [(row,column+1), (row,column-1), (row+1,column),(row-1,column)]
             for i in range(0,4):
                 #print ("Hello")
@@ -84,19 +84,19 @@ class BoardAnalyser():
                     newRow = directions[i][0]
 
                     if(i == 0 and self.getPiece((newRow, newColumn+1))== '-'):
-                        print ("Jump1")
+                        #print ("Jump1")
                         totalValidMoves+=1
                         continue
                     if(i==1 and self.getPiece((newRow, newColumn-1))=='-'):
-                        print ("Jump2")
+                        #print ("Jump2")
                         totalValidMoves+=1
                         continue
                     if(i==2 and self.getPiece((newRow+1, newColumn))=='-'):
-                        print ("Jump 3")
+                        #print ("Jump 3")
                         totalValidMoves+=1
                         continue
                     if(i==3 and self.getPiece((newRow-1, newColumn))== '-'):
-                        print("Jump4")
+                        #print("Jump4")
                         totalValidMoves+=1
                         continue
         #print (totalValidMoves)
