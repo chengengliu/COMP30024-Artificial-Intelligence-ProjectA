@@ -67,31 +67,36 @@ class BoardAnalyser():
         if(len(self.board)==0):
             #print ("fuck")
             return 0
+        print (self.board)
         for piece in lists:
             #print ("Hello")
-            column = piece[0]
-            row = piece[1]
-
+            column = piece[1]
+            row = piece[0]
+            print(piece)
             directions = [(row,column+1), (row,column-1), (row+1,column),(row-1,column)]
             for i in range(0,4):
                 #print ("Hello")
                 if(self.getPiece(directions[i])=='-'):
                     totalValidMoves+=1
                     #print ("Hello")
-                if(self.getPiece(directions[i])=='O' or '@'):
+                if(self.getPiece(directions[i])=='O' or self.getPiece(directions[i])=='@'):
                     newColumn = directions[i][1]
                     newRow = directions[i][0]
 
-                    if(i == 0 and self.getPiece((newRow, column+1))== '-'):
+                    if(i == 0 and self.getPiece((newRow, newColumn+1))== '-'):
+                        print ("Jump1")
                         totalValidMoves+=1
                         continue
-                    if(i==1 and self.getPiece((newRow, column-1))=='-'):
+                    if(i==1 and self.getPiece((newRow, newColumn-1))=='-'):
+                        print ("Jump2")
                         totalValidMoves+=1
                         continue
-                    if(i==2 and self.getPiece((newRow+1, column))=='-'):
+                    if(i==2 and self.getPiece((newRow+1, newColumn))=='-'):
+                        print ("Jump 3")
                         totalValidMoves+=1
                         continue
-                    if(i==3 and self.getPiece((newRow-1, column))== '-'):
+                    if(i==3 and self.getPiece((newRow-1, newColumn))== '-'):
+                        print("Jump4")
                         totalValidMoves+=1
                         continue
         #print (totalValidMoves)
@@ -291,7 +296,7 @@ if __name__ == "__main__":
     if(board[8] == 'Massacre'):
         init(chessBoard)
     else:
-        boardAnalyser = BoardAnalyser()
+        boardAnalyser = BoardAnalyser(chessBoard)
         whitePieces,blackPieces = boardAnalyser.readBoard()
         print(boardAnalyser.countMoves(whitePieces))
         print(boardAnalyser.countMoves(blackPieces))
