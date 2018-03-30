@@ -65,7 +65,7 @@ class BoardAnalyser():
         totalValidMoves = 0
         #print ("Hello")
         if(len(self.board)==0):
-            #print ("fuck")
+            
             return 0
         ##print (self.board)
         for piece in lists:
@@ -82,24 +82,27 @@ class BoardAnalyser():
                 if(self.getPiece(directions[i])=='O' or self.getPiece(directions[i])=='@'):
                     newColumn = directions[i][1]
                     newRow = directions[i][0]
-
-                    if(i == 0 and self.getPiece((newRow, newColumn+1))== '-'):
-                        #print ("Jump1")
-                        totalValidMoves+=1
-                        continue
-                    if(i==1 and self.getPiece((newRow, newColumn-1))=='-'):
-                        #print ("Jump2")
-                        totalValidMoves+=1
-                        continue
-                    if(i==2 and self.getPiece((newRow+1, newColumn))=='-'):
-                        #print ("Jump 3")
-                        totalValidMoves+=1
-                        continue
+                    # Left side Direction 
                     if(i==3 and self.getPiece((newRow-1, newColumn))== '-'):
                         #print("Jump4")
                         totalValidMoves+=1
                         continue
-        #print (totalValidMoves)
+                    # Right Side direction
+                    if(i==2 and self.getPiece((newRow+1, newColumn))=='-'):
+                        #print ("Jump 3")
+                        totalValidMoves+=1
+                        continue
+                    # Down side direction 
+                    if(i==1 and self.getPiece((newRow, newColumn-1))=='-'):
+                        #print ("Jump2")
+                        totalValidMoves+=1
+                        continue
+                    # Up side direction 
+                    if(i == 0 and self.getPiece((newRow, newColumn+1))== '-'):
+                        #print ("Jump1")
+                        totalValidMoves+=1
+                        continue
+        
         return totalValidMoves
 
 class ValidMove:
@@ -159,7 +162,7 @@ def find_path(start, end, came_from):
         path.append(current)
 
     # reverse to have Start -> Target
-    # just looks nicer
+    # 
     path.reverse()
 
     return path
@@ -213,6 +216,7 @@ def init(board):
     #to generate path, found out the surrouding enviroment, is it next to a corner or next to a white piece already,
     #or is the piece already at the edge
     for wPiece in whitePieces:
+        #print (wPiece)
         for bPiece in blackPieces:
             start_pos = wPiece
             directions = scan_grid(initial_grid, start_pos)
@@ -229,6 +233,7 @@ def init(board):
             elif bPiece[1] != 0 and bPiece[1] != 7 and (board[bPiece[0]][bPiece[1]+1] == 'O' or board[bPiece[0]][bPiece[1]+1] == 'X') and (board[bPiece[0]][bPiece[1]-1] == 'O' or board[bPiece[0]][bPiece[1]-1] == 'X'):
                 terminated.append(bPiece)
             if bPiece not in terminated:
+                #print (bPiece)
                 if bPiece[1] == 7 or board[bPiece[0]][bPiece[1]+1] == 'O' or board[bPiece[0]][bPiece[1]+1] == 'X' :
                     path = find_path(start_pos, (bPiece[0], bPiece[1]-1), directions)
                     terminated.append(bPiece)
@@ -275,7 +280,7 @@ def init(board):
 
 
 if __name__ == "__main__":
-    print("Enter the input, Ctrl+X to end:")
+    #print("Enter the input, Ctrl+X to end:")
     board = []
     chessBoard = []
     whitePieces = []
